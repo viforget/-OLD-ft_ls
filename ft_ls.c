@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/21 01:36:18 by viforget         ###   ########.fr       */
+/*   Updated: 2019/03/22 13:01:49 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,36 @@ void	ft_ls(int flag, char *str)
 	DIR *dir;
 
 	dir = opendir(str);
+	if (flag % 13 == 0)
+	{
+		ft_putstr(str);
+		ft_putstr(":\n");
+	}
 	if (dir != NULL)
 	{
 		ft_affls(dir, flag);
 		closedir(dir);
 	} //Penser a PE free dir en cas d'erreur
+}
+
+void	ft_sort_tab(char **tab, int i)
+{
+	int j;
+	char *st;
+
+	j = i;
+	while(tab[j + 1])
+	{
+		if (ft_strcmp(tab[j], tab[j + 1]) > 0)
+		{
+			st = tab[j];
+			tab[j] = tab[j + 1];
+			tab[j + 1] = st;
+			j = i;
+		}
+		else
+			j++;
+	}
 }
 
 int		main(int argc, char **argv)
@@ -76,13 +101,18 @@ int		main(int argc, char **argv)
 		flag *= alprime(argv[i]);
 		i++;
 	}
+	if (i < argc - 1)
+		flag *= 13;
 	if (argv[i])
 	{
+		ft_sort_tab(argv, i);
 		while (argv[i])
+		{
 			ft_ls(flag, argv[i++]);
+			if (argv[i])
+				ft_putchar('\n');
+		}
 	}
 	else
-	{
 		ft_ls(flag, "./");
-	}
 }

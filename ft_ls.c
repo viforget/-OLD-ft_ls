@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/22 13:01:49 by viforget         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:27:15 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "libft/libft.h"
+
+void	ft_ls(int flag, char *str);
 
 int		alprime(char *str)
 {
@@ -52,9 +54,30 @@ void	ft_affls(DIR *dir, int flag)
 	}
 }
 
+void	ft_recursive_ls(char *str, int flag)
+{
+	DIR				*dir;
+	struct dirent	 *rep;
+
+	dir = opendir(str);
+	str = ft_strjoin(str, "/");
+	rep = readdir(dir);
+	rep = readdir(dir);
+	rep = readdir(dir);
+	while(rep)
+	{
+		if (rep->d_type == 4 && !(flag % 2 != 0 && rep->d_name[0] == '.'))
+		{
+			ft_putchar('\n');
+			ft_ls((flag % 13 == 0) ? flag : flag * 13, ft_strjoin(str, rep->d_name)); //Malloc Warning
+		}
+		rep = readdir(dir);
+	}
+}
+
 void	ft_ls(int flag, char *str)
 {
-	DIR *dir;
+	DIR	*dir;
 
 	dir = opendir(str);
 	if (flag % 13 == 0)
@@ -67,6 +90,10 @@ void	ft_ls(int flag, char *str)
 		ft_affls(dir, flag);
 		closedir(dir);
 	} //Penser a PE free dir en cas d'erreur
+	if (flag % 7 == 0)
+	{
+		ft_recursive_ls(str, flag);
+	}
 }
 
 void	ft_sort_tab(char **tab, int i)
@@ -114,5 +141,5 @@ int		main(int argc, char **argv)
 		}
 	}
 	else
-		ft_ls(flag, "./");
+		ft_ls(flag, ".");
 }

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/23 03:58:31 by viforget         ###   ########.fr       */
+/*   Updated: 2019/03/23 17:32:17 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ int		alprime(char *str)
 	return (nbr);
 }
 
+void	ft_tabdel(char **tab, size_t j) //add to libft
+{
+	size_t	i;
+
+	i = 0;
+	if (tab != NULL)
+	{
+		while (i < j)
+		{
+			ft_strdel(&tab[i]);
+			i++;
+		}
+		ft_memdel((void **)&tab);
+	}
+}
+
 size_t	ft_countfile(char *str, int flag)
 {
 	DIR				*dir;
@@ -57,7 +73,7 @@ size_t	ft_countfile(char *str, int flag)
 	nb = 0;
 	dir = opendir(str);
 	rep = readdir(dir);
-	while(rep)
+	while (rep)
 	{
 		if (flag % 2 == 0 || rep->d_name[0] != '.')
 			nb++;
@@ -66,14 +82,58 @@ size_t	ft_countfile(char *str, int flag)
 	return (nb);
 }
 
-void	ft_affls(DIR *dir, int flag, char *s)
+void	ft_sort_tab_ls_t(char **tab, int i)
+
+{
+	int				j;
+	char			*st;
+	struct stat		*st1;
+	struct stat		*st2;
+
+	j = i;
+	while (tab[j + 1])
+	{
+		stat(tab[j], st1);
+		stat(tab[j + 1], st2);
+		if (st1->st_mtime > st2->st_mtime)
+		{
+			st = tab[j];
+			tab[j] = tab[j + 1];
+			tab[j + 1] = st;
+			j = i;
+		}
+		else
+			j++;
+	}
+}
+
+void	ft_sort_tab_ls(char **tab, int i, int flag)
+{
+	int		j;
+	char	*st;
+
+	j = i;
+	while (tab[j + 1])
+	{
+		if ((ft_strcmp(tab[j], tab[j + 1]) > 0 && flag % 5 != 0) ||
+				(ft_strcmp(tab[j], tab[j + 1]) < 0 && flag % 5 == 0))
+		{
+			st = tab[j];
+			tab[j] = tab[j + 1];
+			tab[j + 1] = st;
+			j = i;
+		}
+		else
+			j++;
+	}
+}
+
+void	ft_affls(DIR *dir, int flag, size_t ct)
 {
 	struct dirent	*rep;
 	char			**tab;
-	size_t				ct;
-	size_t				i;
+	size_t			i;
 
-	ct = ft_countfile(s, flag);
 	flag % 5 == 0 ? (i = ct - 1) : (i = 0);
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
 	rep = readdir(dir);
@@ -88,7 +148,9 @@ void	ft_affls(DIR *dir, int flag, char *s)
 		}
 		rep = readdir(dir);
 	}
+	flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0) : ft_sort_tab_ls(tab, 0, flag);
 	ft_puttab(tab, ct);
+	ft_memdel((void **)&tab);
 }
 
 void	ft_recursive_ls(char *s, int fg)
@@ -124,33 +186,12 @@ void	ft_ls(int flag, char *str)
 	}
 	if (dir != NULL)
 	{
-		ft_affls(dir, flag, str);
+		ft_affls(dir, flag, ft_countfile(str, flag));
 		closedir(dir);
-	} //Penser a PE free dir en cas d'erreur (ou pas)
+	}//Penser a PE free dir en cas d'erreur (ou pas)
 	if (flag % 7 == 0)
 	{
 		ft_recursive_ls(str, flag);
-	}
-}
-
-void	ft_sort_tab(char **tab, int i, int flag)
-{
-	int		j;
-	char	*st;
-
-	j = i;
-	while (tab[j + 1])
-	{
-		if ((ft_strcmp(tab[j], tab[j + 1]) > 0 && flag % 5 != 0) ||
-			(ft_strcmp(tab[j], tab[j + 1]) < 0 && flag % 5 == 0))
-		{
-			st = tab[j];
-			tab[j] = tab[j + 1];
-			tab[j + 1] = st;
-			j = i;
-		}
-		else
-			j++;
 	}
 }
 
@@ -171,7 +212,7 @@ int		main(int argc, char **argv)
 		flag *= 13;
 	if (argv[i])
 	{
-		ft_sort_tab(argv, i, flag);
+		ft_sort_tab_ls(argv, i, flag);
 		while (argv[i])
 		{
 			ft_ls(flag, argv[i++]);

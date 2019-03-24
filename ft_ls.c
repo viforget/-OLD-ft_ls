@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/24 01:25:41 by viforget         ###   ########.fr       */
+/*   Updated: 2019/03/24 14:29:08 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ size_t	ft_countfile(char *str, int flag)
 }
 
 void	ft_sort_tab_ls_t(char **tab, int i)
-
 {
 	int				j;
 	char			*st;
@@ -132,7 +131,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 	char			**tab;
 	size_t			i;
 
-	flag % 5 == 0 ? (i = ct - 1) : (i = 0);
+	flag % 5 == 0 ? i = ct - 1 : (i = 0);
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
 	rep = readdir(dir);
 	while (rep)
@@ -147,6 +146,8 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 		rep = readdir(dir);
 	}
 	flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0) : ft_sort_tab_ls(tab, 0, flag);
+	if (flag % 3 == 0) 
+		ft_addinfotab(tab, ct);
 	ft_puttab(tab, ct);
 	ft_memdel((void **)&tab);
 }

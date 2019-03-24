@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_ls_l.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/23 02:28:18 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/24 14:22:07 by viforget         ###   ########.fr       */
+/*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
+/*   Updated: 2019/03/24 15:17:41 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS_H
-# define FT_LS_H
+#include "ft_ls.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "libft/libft.h"
+void	ft_setrights(char *chmod, char *str)
+{
+	struct stat buf;
 
-void	ft_ls(int flag, char *str);
-void	ft_addinfotab(char **tab, size_t ct);
+	stat(str, &buf);
 
-#endif
+}
+
+void	ft_addinfotab(char **tab, size_t ct)
+{
+	char	chmod[11];
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	while(j < ct)
+	{
+		while(i < 11)
+		{
+			ft_setrights(chmod, tab[j]);
+		}
+		j++;
+	}
+}

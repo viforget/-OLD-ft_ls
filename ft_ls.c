@@ -6,17 +6,18 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/23 17:32:17 by viforget         ###   ########.fr       */
+/*   Updated: 2019/03/24 01:25:41 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_putillop(char c)
+int		ft_putillop(char c)
 {
 	ft_putstr("ft_ls: illegal option -- ");
 	ft_putchar(c);
 	ft_putstr("\nusage: ft_ls [-Ralrt] [file ...]\n");
+	return (0);
 }
 
 int		alprime(char *str)
@@ -39,10 +40,7 @@ int		alprime(char *str)
 		else if (str[i] == 't' && nbr % 11 != 0)
 			nbr *= 11;
 		else
-		{
-			ft_putillop(str[i]);
-			return (0);
-		}
+			return (ft_putillop(str[i]));
 		i++;
 	}
 	return (nbr);
@@ -87,15 +85,15 @@ void	ft_sort_tab_ls_t(char **tab, int i)
 {
 	int				j;
 	char			*st;
-	struct stat		*st1;
-	struct stat		*st2;
+	struct stat		bf1;
+	struct stat		bf2;
 
 	j = i;
 	while (tab[j + 1])
 	{
-		stat(tab[j], st1);
-		stat(tab[j + 1], st2);
-		if (st1->st_mtime > st2->st_mtime)
+		stat(tab[j], &bf1);
+		stat(tab[j + 1], &bf2);
+		if (bf1.st_mtime < bf2.st_mtime)
 		{
 			st = tab[j];
 			tab[j] = tab[j + 1];

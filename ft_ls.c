@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/03/24 14:29:08 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/01 22:21:03 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,17 @@ void	ft_sort_tab_ls_t(char **tab, int i)
 	}
 }
 
-void	ft_sort_tab_ls(char **tab, int i, int flag)
+void	ft_sort_tab_ls(char **tab, int i, int flag, size_t ct)
 {
 	int		j;
 	char	*st;
 
 	j = i;
-	while (tab[j + 1])
+	while (j - i < ct - 1 && tab[j + 1])
 	{
+		ft_putendl(tab[j]);
+		ft_putendl(tab[j + 1]);
+		ft_putchar('\n');
 		if ((ft_strcmp(tab[j], tab[j + 1]) > 0 && flag % 5 != 0) ||
 				(ft_strcmp(tab[j], tab[j + 1]) < 0 && flag % 5 == 0))
 		{
@@ -121,7 +124,9 @@ void	ft_sort_tab_ls(char **tab, int i, int flag)
 			j = i;
 		}
 		else
+		{
 			j++;
+		}
 	}
 }
 
@@ -131,25 +136,29 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 	char			**tab;
 	size_t			i;
 
-	flag % 5 == 0 ? i = ct - 1 : (i = 0);
-	tab = (char **)ft_memalloc(sizeof(char *) * ct);
-	rep = readdir(dir);
-	while (rep)
+	i = 0;
+	if (ct != 0)
 	{
-		if (!(rep->d_name[0] == '.' && flag % 2 != 0))
-		{
-			if (flag % 5 == 0)
-				tab[i--] = rep->d_name;
-			else
-				tab[i++] = rep->d_name;
-		}
+		tab = (char **)ft_memalloc(sizeof(char *) * ct);
 		rep = readdir(dir);
+		while (rep)
+		{
+			if (!(rep->d_name[0] == '.' && flag % 2 != 0))
+			{
+				//ft_putendl(rep->d_name);
+				tab[i++] = rep->d_name;
+				//ft_putendl(rep->d_name);
+			}
+			rep = readdir(dir);
+		}
+		flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0) : ft_sort_tab_ls(tab, 0, flag, ct);
+		if (flag % 3 == 0)
+		{
+			ft_addinfotab(tab, ct);
+		}
+		ft_puttab(tab, ct);
+		ft_memdel((void **)&tab);
 	}
-	flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0) : ft_sort_tab_ls(tab, 0, flag);
-	if (flag % 3 == 0) 
-		ft_addinfotab(tab, ct);
-	ft_puttab(tab, ct);
-	ft_memdel((void **)&tab);
 }
 
 void	ft_recursive_ls(char *s, int fg)
@@ -211,7 +220,7 @@ int		main(int argc, char **argv)
 		flag *= 13;
 	if (argv[i])
 	{
-		ft_sort_tab_ls(argv, i, flag);
+		ft_sort_tab_ls(argv, i, flag, argc - 1);
 		while (argv[i])
 		{
 			ft_ls(flag, argv[i++]);

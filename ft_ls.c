@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/01 22:21:03 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/02 21:45:17 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,31 @@ size_t	ft_countfile(char *str, int flag)
 	return (nb);
 }
 
-void	ft_sort_tab_ls_t(char **tab, int i)
+void	ft_sort_tab_dir(struct dirent **tr, int flag)
+{
+	int		j;
+	struct dirent	*st;
+
+	j = 0;
+	while (tr[j + 1])
+	{
+		if ((ft_strcmp(tr[j]->d_name, tr[j + 1]->d_name) > 0 && flag % 5 != 0)
+			|| (ft_strcmp(tr[j]->d_name, tr[j + 1]->d_name) < 0
+			&& flag % 5 == 0))
+		{
+			st = tr[j];
+			tr[j]= tr[j + 1];
+			tr[j + 1] = st;
+			j = 0;
+		}
+		else
+		{
+			j++;
+		}
+	}
+}
+
+void	ft_sort_tab_ls_t(char **tab, int i, size_t ct)
 {
 	int				j;
 	char			*st;
@@ -88,7 +112,7 @@ void	ft_sort_tab_ls_t(char **tab, int i)
 	struct stat		bf2;
 
 	j = i;
-	while (tab[j + 1])
+	while (j - i < ct && tab[j + 1])
 	{
 		stat(tab[j], &bf1);
 		stat(tab[j + 1], &bf2);
@@ -112,9 +136,6 @@ void	ft_sort_tab_ls(char **tab, int i, int flag, size_t ct)
 	j = i;
 	while (j - i < ct - 1 && tab[j + 1])
 	{
-		ft_putendl(tab[j]);
-		ft_putendl(tab[j + 1]);
-		ft_putchar('\n');
 		if ((ft_strcmp(tab[j], tab[j + 1]) > 0 && flag % 5 != 0) ||
 				(ft_strcmp(tab[j], tab[j + 1]) < 0 && flag % 5 == 0))
 		{
@@ -151,7 +172,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 			}
 			rep = readdir(dir);
 		}
-		flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0) : ft_sort_tab_ls(tab, 0, flag, ct);
+		flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0, ct) : ft_sort_tab_ls(tab, 0, flag, ct);
 		if (flag % 3 == 0)
 		{
 			ft_addinfotab(tab, ct);
@@ -161,24 +182,49 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 	}
 }
 
+struct dirent	**ft_rec(int ct, DIR *dir)
+{
+	struct dirent *rep;
+	struct dirent **trep;
+
+	rep = readdir(dir);
+	if(rep)
+	{
+		trep = ft_rec(ct + 1, dir);
+		trep[ct] = rep;
+		return(trep);
+	}
+	else
+	{
+		trep = (struct dirent **)ft_memalloc(sizeof(struct dirent *) * (ct + 1));
+		trep[ct] = NULL;
+		return(trep);
+	}
+}
+
 void	ft_recursive_ls(char *s, int fg)
 {
 	DIR				*dir;
-	struct dirent	*rep;
+	struct dirent	**trep;
+	size_t			ct;
 
+	ct = 0;
 	dir = opendir(s);
 	s = ft_strjoin(s, "/");
-	rep = readdir(dir);
-	rep = readdir(dir);
-	rep = readdir(dir);
-	while (rep)
+	readdir(dir);
+	readdir(dir);
+	readdir(dir);
+	trep = ft_rec(0, dir);
+	if (trep[0] != NULL)
+		ft_sort_tab_dir(trep, fg);
+	while (trep[ct])//The error is here
 	{
-		if (rep->d_type == 4 && !(fg % 2 != 0 && rep->d_name[0] == '.'))
+		if (trep[ct]->d_type == 4 && !(fg % 2 != 0 && trep[ct]->d_name[0] == '.'))
 		{
 			ft_putchar('\n');
-			ft_ls((fg % 13 == 0) ? fg : fg * 13, ft_strjoin(s, rep->d_name)); //Malloc Warning
+			ft_ls((fg % 13 == 0) ? fg : fg * 13, ft_strjoin(s, trep[ct]->d_name)); //Malloc Warning
 		}
-		rep = readdir(dir);
+		ct++;
 	}
 }
 
@@ -220,7 +266,7 @@ int		main(int argc, char **argv)
 		flag *= 13;
 	if (argv[i])
 	{
-		ft_sort_tab_ls(argv, i, flag, argc - 1);
+		ft_sort_tab_ls(argv, i, flag, argc);
 		while (argv[i])
 		{
 			ft_ls(flag, argv[i++]);

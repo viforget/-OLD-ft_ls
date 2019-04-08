@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/02 21:45:17 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/08 18:22:33 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,18 +155,21 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 {
 	struct dirent	*rep;
 	char			**tab;
+	unsigned char	*type;
 	size_t			i;
 
 	i = 0;
 	if (ct != 0)
 	{
 		tab = (char **)ft_memalloc(sizeof(char *) * ct);
+		type = (unsigned char *)ft_memalloc(sizeof(unsigned char ) * ct);
 		rep = readdir(dir);
 		while (rep)
 		{
 			if (!(rep->d_name[0] == '.' && flag % 2 != 0))
 			{
 				//ft_putendl(rep->d_name);
+				type[i] = rep->d_type;
 				tab[i++] = rep->d_name;
 				//ft_putendl(rep->d_name);
 			}
@@ -175,7 +178,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 		flag % 11 == 0 ? ft_sort_tab_ls_t(tab, 0, ct) : ft_sort_tab_ls(tab, 0, flag, ct);
 		if (flag % 3 == 0)
 		{
-			ft_addinfotab(tab, ct);
+			ft_addinfotab(tab, ct, type);
 		}
 		ft_puttab(tab, ct);
 		ft_memdel((void **)&tab);
@@ -233,10 +236,13 @@ void	ft_ls(int flag, char *str)
 	DIR	*dir;
 
 	dir = opendir(str);
-	if (flag % 13 == 0)
+	if (flag % 13 == 0 || dir == NULL)
 	{
 		ft_putstr(str);
-		ft_putstr(":\n");
+		if (dir != NULL)
+			ft_putstr(":\n");
+		else
+			ft_putchar('\n');
 	}
 	if (dir != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 02:28:18 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/08 18:14:33 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/09 01:54:34 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@
 void	ft_ls(int flag, char *str);
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type);
 
-
+#define TYPE ".pc.d.b.-.l.s"
 #endif

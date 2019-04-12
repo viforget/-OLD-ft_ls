@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/12 03:38:34 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/12 04:11:53 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	ft_addright(char **str, unsigned char type)
 	stt.st_mode % 512 >= 256 ? right[1] = 'r' : (right[1] = '-');
 	right[10] = ' ';
 	right[11] = ' ';
+	ft_putstr(stt.st_uid);
+	*str = ft_strjoin(" ", *str);
+	*str = ft_strjoindel(ft_itoa(stt.st_size), *str);
+	*str = ft_strjoin(" ", *str);
+	*str = ft_strjoindel(ft_itoa(stt.st_nlink), *str);
 	*str = ft_strjoin(right, *str); //END
 }
 

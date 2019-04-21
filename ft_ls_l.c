@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 11:30:35 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/13 23:25:48 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,12 @@ char	*setdate(char **date, char *str, char *size, time_t ct)
 	str = ft_strjoindele("  ", str);
 	str = ft_strjoindel2(size, str);
 	str = ft_strjoindele("  ", str);
-	//ft_putendl(date[3]);
-	str = ft_strjoindele(date[4], str);
-	//ft_strdel(&size);
 	return (str);
 }
 
-void	ft_addinfo(char **str, unsigned char type)
+size_t	ft_addinfo(char **str, unsigned char type)
 {
-	struct stat		 stt;
+	struct stat		stt;
 	struct passwd	*ginfo;
 	char			*right;
 	char			**date;
@@ -75,22 +72,28 @@ void	ft_addinfo(char **str, unsigned char type)
 	right = setright(stt.st_mode, TYPE[type]);
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
 	*str = setdate(date, *str, ft_itoa(stt.st_size), stt.st_mtime);
+	*str = ft_strjoindele(getgrgid(ginfo->pw_gid)->gr_name, *str);
 	*str = ft_strjoindele("  ", *str);
 	*str = ft_strjoindele(ginfo->pw_name, *str);
 	*str = ft_strjoindele("  ", *str);
 	*str = ft_strjoindel2(ft_itoa(stt.st_nlink), *str);
 	*str = ft_strjoindel2(right, *str); //END
+	return (stt.st_nlink);
 }
 
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type)
 {
-	int i;
+	int		i;
+	size_t	tot;
 
+	tot = 0;
 	i = 0;
 	while (i < ct)
 	{
-		ft_addinfo(&tab[i], type[i]);
+		tot += ft_addinfo(&tab[i], type[i]);
 		i++;
 	}
-	//ft_puttab(tab, ct);
+	ft_putstr("total ");
+	ft_putnbr(tot);
+	ft_putchar('\n');
 }

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 22:22:19 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:36:50 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ size_t	ft_countfile(char *str, int flag)
 	return (nb);
 }
 
-void	ft_affls(DIR *dir, int flag, size_t ct)
+void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 {
 	struct dirent	*rep;
 	char			**tab;
@@ -98,13 +98,13 @@ void	ft_affls(DIR *dir, int flag, size_t ct)
 		if (!(rep->d_name[0] == '.' && flag % 2 != 0))
 		{
 			type[i] = rep->d_type;
-			tab[i++] = rep->d_name;
+			tab[i++] = ft_strdup(rep->d_name);
 		}
 		rep = readdir(dir);
 	}
 	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, flag, ct);
 	if (flag % 3 == 0)
-		ft_addinfotab(tab, ct, type);
+		ft_addinfotab(tab, ct, type, str);
 	ft_puttab(tab, ct);
 	ft_memdel((void **)&tab);
 }
@@ -172,7 +172,7 @@ void	ft_ls(int flag, char *str)
 	}
 	if (dir != NULL)
 	{
-		ft_affls(dir, flag, ft_countfile(str, flag));
+		ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
 		closedir(dir);
 	}//Penser a PE free dir en cas d'erreur (ou pas)
 	if (flag % 7 == 0)
@@ -202,7 +202,7 @@ int		main(int argc, char **argv)
 		ft_sort_ls(argv, i, flag, argc);
 		while (argv[i])
 		{
-			ft_ls(flag, argv[i++]);
+			ft_ls(flag, ft_strdup(argv[i++]));
 			if (argv[i])
 				ft_putchar('\n');
 		}

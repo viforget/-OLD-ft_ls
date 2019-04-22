@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 22:49:49 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:26:22 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 # include "libft/libft.h"
 
 void	ft_ls(int flag, char *str);
-void	ft_addinfotab(char **tab, size_t ct, unsigned char *type);
+void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str);
 void	ft_sort_ls(char **tab, int i, int flag, size_t ct);
 void	ft_sort_ls_t(char **tab, int i, size_t ct);
 void	ft_sort_tab_dir(struct dirent **tr, int flag);
+char	**fullinfo(char ***itab, char **tab, size_t ct);
 
 #define TYPE ".pc.d.b.-.l.s"
 #endif

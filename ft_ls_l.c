@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 23:25:48 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/22 18:35:50 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*setright(int mode, char c)
 {
-	char	right[13];
+	char	right[11];
 
 	right[0] = c;
 	mode % 2 == 1 ? right[9] = 'x' :
@@ -35,65 +35,60 @@ char	*setright(int mode, char c)
 		(right[2] = '-');
 	mode % 512 >= 256 ? right[1] = 'r' :
 		(right[1] = '-');
-	right[10] = ' ';
-	right[11] = ' ';
-	right[12] = '\0';
+	right[10] = '\0';
 	return (ft_strdup(right));
 }
 
-char	*setdate(char **date, char *str, char *size, time_t ct)
+char	**setdate(char **date, char **itab, char *size, time_t ct)
 {
 	date[4][4] = '\0';
 	date[3][5] = '\0';
-	str = ft_strjoin("  ", str);
 	if ((ct - time(NULL) > -15778800) && (ct - time(NULL) < 3600))
-		str = ft_strjoindele(date[3], str);
+		itab[7] = ft_strdup(date[3]);
 	else
-		str = ft_strjoindele(date[4], str);
-	str = ft_strjoindele("  ", str);
-	str = ft_strjoindele(date[2], str);
-	str = ft_strjoindele("  ", str);
-	str = ft_strjoindele(date[1], str);
-	str = ft_strjoindele("  ", str);
-	str = ft_strjoindel2(size, str);
-	str = ft_strjoindele("  ", str);
-	return (str);
+		itab[7] = ft_strdup(date[4]);
+	itab[6] = ft_strdup(date[2]);
+	itab[5] = ft_strdup(date[1]);
+	itab[4] = size;
+	return (itab);
 }
 
-size_t	ft_addinfo(char **str, unsigned char type)
+size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 {
 	struct stat		stt;
 	struct passwd	*ginfo;
-	char			*right;
 	char			**date;
 
-	stat(*str, &stt);
+	stat(pat, &stt);
 	ginfo = getpwuid(stt.st_uid);
-	right = setright(stt.st_mode, TYPE[type]);
+	itab[0] = setright(stt.st_mode, TYPE[type]);
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
-	*str = setdate(date, *str, ft_itoa(stt.st_size), stt.st_mtime);
-	*str = ft_strjoindele(getgrgid(ginfo->pw_gid)->gr_name, *str);
-	*str = ft_strjoindele("  ", *str);
-	*str = ft_strjoindele(ginfo->pw_name, *str);
-	*str = ft_strjoindele("  ", *str);
-	*str = ft_strjoindel2(ft_itoa(stt.st_nlink), *str);
-	*str = ft_strjoindel2(right, *str); //END
-	return (stt.st_nlink);
+	itab = setdate(date, itab, ft_itoa(stt.st_size), stt.st_mtime);
+	itab[3] = ft_strdup(getgrgid(ginfo->pw_gid)->gr_name);
+	itab[2] = ft_strdup(ginfo->pw_name);
+	itab[1] = ft_itoa(stt.st_nlink);
+	ft_strdel(&pat);
+	return (stt.st_blocks);
 }
 
-void	ft_addinfotab(char **tab, size_t ct, unsigned char *type)
+void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 {
 	int		i;
 	size_t	tot;
+	char	***itab;
 
 	tot = 0;
 	i = 0;
+	itab = (char ***)ft_memalloc(sizeof(char **) * ct);
 	while (i < ct)
 	{
-		tot += ft_addinfo(&tab[i], type[i]);
+		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
+		tot += ft_addinfo(itab[i] ,tab[i], type[i], ft_strjoin(str, tab[i]));
 		i++;
 	}
+	tab = fullinfo(itab, tab, ct);
 	ft_putstr("total ");
 	ft_putnbr(tot);
 	ft_putchar('\n');
+	ft_strdel(&str);
 }

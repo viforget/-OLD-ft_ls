@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/22 18:36:50 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/27 00:32:34 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ void	ft_recursive_ls(char *s, int fg)
 	ct = 0;
 	dir = opendir(s);
 	s = ft_strjoin(s, "/");
-	readdir(dir);
 	readdir(dir);
 	readdir(dir);
 	trep = ft_rec(0, dir);

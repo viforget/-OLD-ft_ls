@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/27 00:32:34 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/27 01:04:25 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	ft_recursive_ls(char *s, int fg)
 					&& trep[ct]->d_name[0] == '.'))
 		{
 			ft_putchar('\n');
+		ft_strjoin(s, trep[ct]->d_name);
 			ft_ls((fg % 13 == 0) ? fg : fg * 13,
 					ft_strjoin(s, trep[ct]->d_name));
 		}

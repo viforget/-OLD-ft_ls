@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/22 18:36:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/27 01:57:38 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,12 @@ char	*fusion(char *tab, char **itab, int *len)
 	i = 0;
 	str = (char *)ft_memalloc(sizeof(char) * len[7] + 1);
 	str = (char *)ft_memset(str, 32, len[7] + 1);
-	//str = strset(str, ' ', len[8]);
 	while(i < 8)
 	{
 		setstr(str, itab[i], len[i]);
 		i++;
 	}
-	str = ft_strjoindel2(str, tab);
+	str = ft_strjoindel2(str, tab); //WTF??????
 	//ft_strdel(tab);
 	return (str);
 }

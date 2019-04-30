@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 22:51:20 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 10:37:57 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:33:29 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,6 @@ void				ft_lstadde(t_list **alst, t_list *new);
 size_t				ft_sqrtp(size_t nb);
 char				*ft_strjoindele(char const *s1, char *s2);
 char				*ft_strjoindel2(char *s1, char *s2);
+void				ft_tabdel(char **tab, size_t j);
+
 #endif

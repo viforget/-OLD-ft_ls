@@ -6,11 +6,15 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/27 01:08:22 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/29 16:08:09 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+/*
+** return a str[10] with de right of the file
+*/
 
 char	*setright(int mode, char c)
 {
@@ -39,6 +43,10 @@ char	*setright(int mode, char c)
 	return (ft_strdup(right));
 }
 
+/*
+** Put the date information in the str "itab"
+*/
+
 char	**setdate(char **date, char **itab, char *size, time_t ct)
 {
 	date[4][4] = '\0';
@@ -52,6 +60,13 @@ char	**setdate(char **date, char **itab, char *size, time_t ct)
 	itab[4] = size;
 	return (itab);
 }
+
+/*
+** Put informations in itab
+** type is the idex of the macro TYPE
+** str is the name of the file/directory
+** pat is the path of the file/directory
+*/
 
 size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 {
@@ -71,6 +86,10 @@ size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 	return (stt.st_blocks);
 }
 
+/*
+** addinfotab is a loop that call addinfo for each file
+*/
+
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 {
 	int		i;
@@ -83,7 +102,7 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	while (i < ct)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
-		tot += ft_addinfo(itab[i] ,tab[i], type[i], ft_strjoin(str, tab[i]));
+		tot += ft_addinfo(itab[i], tab[i], type[i], ft_strjoin(str, tab[i]));
 		i++;
 	}
 	tab = fullinfo(itab, tab, ct);

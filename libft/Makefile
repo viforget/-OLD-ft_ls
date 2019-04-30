@@ -6,7 +6,7 @@
 #    By: viforget <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/15 20:55:26 by viforget          #+#    #+#              #
-#    Updated: 2019/04/13 10:36:38 by viforget         ###   ########.fr        #
+#    Updated: 2019/04/29 15:32:33 by viforget         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRC = ft_atoi.c\
 	ft_sqrtp.c\
 	ft_strjoindele.c\
 	ft_strjoindel2.c\
+	ft_tabdel.c\
 
 OBJ = ft_atoi.o\
 	ft_memcmp.o\
@@ -155,6 +156,7 @@ OBJ = ft_atoi.o\
 	ft_sqrtp.o\
 	ft_strjoindele.o\
 	ft_strjoindel2.o\
+	ft_tabdel.o\
 
 all : $(NAME)
 

@@ -6,19 +6,21 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/27 01:04:25 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/30 18:32:47 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		ft_putillop(char c)
-{
-	ft_putstr("ft_ls: illegal option -- ");
-	ft_putchar(c);
-	ft_putstr("\nusage: ft_ls [-Ralrt] [file ...]\n");
-	return (0);
-}
+/*
+** create a int flag that contain flag information
+** if flag % 2 == 0, that mean the flag "a" is active
+** 2 -> -a
+** 3 -> -l
+** 5 -> -r
+** 7 -> -R
+** 11 -> -t
+*/
 
 int		alprime(char *str)
 {
@@ -46,21 +48,9 @@ int		alprime(char *str)
 	return (nbr);
 }
 
-void	ft_tabdel(char **tab, size_t j) //add to libft
-{
-	size_t	i;
-
-	i = 0;
-	if (tab != NULL)
-	{
-		while (i < j)
-		{
-			ft_strdel(&tab[i]);
-			i++;
-		}
-		ft_memdel((void **)&tab);
-	}
-}
+/*
+** return the number of file in the repertory (str)
+*/
 
 size_t	ft_countfile(char *str, int flag)
 {
@@ -79,6 +69,10 @@ size_t	ft_countfile(char *str, int flag)
 	}
 	return (nb);
 }
+
+/*
+** find, sort and display all informations(name, flag -l)
+*/
 
 void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 {
@@ -102,59 +96,11 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 		}
 		rep = readdir(dir);
 	}
-	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, flag, ct);
-	if (flag % 3 == 0)
-		ft_addinfotab(tab, ct, type, str);
+	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, ct);
+	flag % 5 == 0 ? ft_reverse_tab(tab, ct) : 19;
+	flag % 3 == 0 ? ft_addinfotab(tab, ct, type, str) : 19;
 	ft_puttab(tab, ct);
-	ft_memdel((void **)&tab);
-}
-
-struct dirent	**ft_rec(int ct, DIR *dir)
-{
-	struct dirent *rep;
-	struct dirent **trep;
-
-	rep = readdir(dir);
-	if (rep)
-	{
-		trep = ft_rec(ct + 1, dir);
-		trep[ct] = rep;
-		return (trep);
-	}
-	else
-	{
-		trep = ft_memalloc(sizeof(struct dirent *) * (ct + 1));
-		trep[ct] = NULL;
-		return (trep);
-	}
-}
-
-void	ft_recursive_ls(char *s, int fg)
-{
-	DIR				*dir;
-	struct dirent	**trep;
-	size_t			ct;
-
-	ct = 0;
-	dir = opendir(s);
-	s = ft_strjoin(s, "/");
-	readdir(dir);
-	readdir(dir);
-	trep = ft_rec(0, dir);
-	if (trep[0] != NULL)
-		ft_sort_tab_dir(trep, fg);
-	while (trep[ct])
-	{
-		if (trep[ct]->d_type == 4 && !(fg % 2 != 0
-					&& trep[ct]->d_name[0] == '.'))
-		{
-			ft_putchar('\n');
-		ft_strjoin(s, trep[ct]->d_name);
-			ft_ls((fg % 13 == 0) ? fg : fg * 13,
-					ft_strjoin(s, trep[ct]->d_name));
-		}
-		ct++;
-	}
+	ft_tabdel(tab, ct);
 }
 
 void	ft_ls(int flag, char *str)
@@ -162,7 +108,7 @@ void	ft_ls(int flag, char *str)
 	DIR	*dir;
 
 	dir = opendir(str);
-	if (flag % 13 == 0 || dir == NULL)
+	if (flag % 13 == 0 || (dir == NULL && errno == ENOTDIR))//Ne plus y gerer les erreurs ici
 	{
 		ft_putstr(str);
 		if (dir != NULL)
@@ -174,7 +120,9 @@ void	ft_ls(int flag, char *str)
 	{
 		ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
 		closedir(dir);
-	}//Penser a PE free dir en cas d'erreur (ou pas)
+	}
+	if (errno != 0)
+		ft_puterror(str, errno);
 	if (flag % 7 == 0)
 	{
 		ft_recursive_ls(str, flag);
@@ -195,11 +143,11 @@ int		main(int argc, char **argv)
 			return (0);
 		i++;
 	}
-	if (i < argc - 1)
-		flag *= 13;
+	i < argc - 1 ? flag *= 13 : 19;
 	if (argv[i])
 	{
-		ft_sort_ls(argv, i, flag, argc);
+		ft_sort_ls(argv, i, argc);
+		flag % 5 == 0 ? ft_reverse_tab(argv, argc) : 19;
 		while (argv[i])
 		{
 			ft_ls(flag, ft_strdup(argv[i++]));

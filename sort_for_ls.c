@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/13 22:22:14 by viforget         ###   ########.fr       */
+/*   Updated: 2019/04/29 14:57:05 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_sort_ls_t(char **tab, int i, size_t ct)
 	}
 }
 
-void	ft_sort_ls(char **tab, int i, int flag, size_t ct)
+void	ft_sort_ls(char **tab, int i, size_t ct)
 {
 	int		j;
 	char	*st;
@@ -68,8 +68,7 @@ void	ft_sort_ls(char **tab, int i, int flag, size_t ct)
 	j = i;
 	while (j - i < ct - 1 && tab[j + 1])
 	{
-		if ((ft_strcmp(tab[j], tab[j + 1]) > 0 && flag % 5 != 0) ||
-				(ft_strcmp(tab[j], tab[j + 1]) < 0 && flag % 5 == 0))
+		if (ft_strcmp(tab[j], tab[j + 1]) > 0)
 		{
 			st = tab[j];
 			tab[j] = tab[j + 1];
@@ -80,5 +79,26 @@ void	ft_sort_ls(char **tab, int i, int flag, size_t ct)
 		{
 			j++;
 		}
+	}
+}
+
+/*
+** Reverse the result if the flag "-r" is activated
+*/
+
+void	ft_reverse_tab(char **tab, size_t ct)
+{
+	size_t	i;
+	char	*buf;
+
+	ct--;
+	i = 0;
+	while (i < ct)
+	{
+		buf = tab[i];
+		tab[i] = tab[ct];
+		tab[ct] = buf;
+		i++;
+		ct--;
 	}
 }

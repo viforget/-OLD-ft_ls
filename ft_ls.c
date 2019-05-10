@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/30 18:32:47 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 13:40:32 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	if (ct == 0)
 		return ;
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
-	type = (unsigned char *)ft_memalloc(sizeof(unsigned char ) * ct);
+	type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct);
 	rep = readdir(dir);
 	while (rep)
 	{
@@ -103,18 +103,17 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	ft_tabdel(tab, ct);
 }
 
-void	ft_ls(int flag, char *str)
+int		ft_ls(int flag, char *str)
 {
 	DIR	*dir;
 
 	dir = opendir(str);
-	if (flag % 13 == 0 || (dir == NULL && errno == ENOTDIR))//Ne plus y gerer les erreurs ici
+	if (dir == NULL && errno == ENOTDIR)
+		return (0);
+	if (flag % 13 == 0 && dir != NULL)//Ne plus y gerer les erreurs ici
 	{
 		ft_putstr(str);
-		if (dir != NULL)
-			ft_putstr(":\n");
-		else
-			ft_putchar('\n');
+		ft_putstr(":\n");
 	}
 	if (dir != NULL)
 	{
@@ -122,12 +121,11 @@ void	ft_ls(int flag, char *str)
 		closedir(dir);
 	}
 	if (errno != 0)
-		ft_puterror(str, errno);
+		ft_puterror(str, errno, flag);
 	if (flag % 7 == 0)
-	{
 		ft_recursive_ls(str, flag);
-	}
 	ft_strdel(&str);
+	return (1);
 }
 
 int		main(int argc, char **argv)
@@ -144,13 +142,14 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i < argc - 1 ? flag *= 13 : 19;
+	ft_file(argv, i, argc, flag);
 	if (argv[i])
 	{
 		ft_sort_ls(argv, i, argc);
 		flag % 5 == 0 ? ft_reverse_tab(argv, argc) : 19;
 		while (argv[i])
 		{
-			ft_ls(flag, ft_strdup(argv[i++]));
+			if (ft_ls(flag, ft_strdup(argv[i++])) == 1)
 			if (argv[i])
 				ft_putchar('\n');
 		}

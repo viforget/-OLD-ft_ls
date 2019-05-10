@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/30 17:52:30 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 13:02:17 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@
 # include <grp.h>
 # include "libft/libft.h"
 
-void	ft_ls(int flag, char *str);
+int		ft_ls(int flag, char *str);
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str);
-void	ft_sort_ls(char **tab, int i, size_t ct);
-void	ft_sort_ls_t(char **tab, int i, size_t ct);
+void	ft_sort_ls(char **tab, size_t i, size_t ct);
+void	ft_sort_ls_t(char **tab, size_t i, size_t ct);
 void	ft_sort_tab_dir(struct dirent **tr, int flag);
 char	**fullinfo(char ***itab, char **tab, size_t ct);
 void	ft_reverse_tab(char **tab, size_t ct);
 int		ft_putillop(char c);
-void	ft_puterror(char *str, int e);
+void	ft_puterror(char *str, int e, int flag);
 void	ft_recursive_ls(char *s, int fg);
+size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat);
+void	ft_file(char **argv, int i, int ct, int flag);
 
 # define TYPE ".pc.d.b.-.l.s"
 #endif

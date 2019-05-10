@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/29 16:08:09 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 15:33:56 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	int		i;
 	size_t	tot;
 	char	***itab;
-
+	
 	tot = 0;
 	i = 0;
 	itab = (char ***)ft_memalloc(sizeof(char **) * ct);

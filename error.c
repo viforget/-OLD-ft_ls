@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/30 18:30:39 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/30 18:31:08 by viforget         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:27:08 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/30 18:30:36 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 12:57:28 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +48,26 @@ void	ft_enoent(char *str)
 	ft_putstr(": No such file or directory\n");
 }
 
-void	ft_enotdir(char *str)
+void	ft_enotdir(char *str, int flag)
 {
+	char **itab;
+
+	itab = NULL;
+	if (flag % 3 == 0)
+	{
+		ft_addinfo(itab, str, DT_REG, str);
+	}
+	else
+		ft_putendl(str);
 }
 
-void	ft_puterror(char *str, int e)
+void	ft_puterror(char *str, int e, int flag)
 {
+	int i;//Just for -Werror
+
+	i = flag;//Just for -Werror
 	e == EACCES ? errpermden(str) : 3000 ;
-	e == ENOTDIR ? ft_enotdir(str) : 19;
+	//e == ENOTDIR ? ft_enotdir(str, flag) : 19;
 	e == ENOENT ? ft_enoent(str): 42 ;
 
 }

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/29 14:57:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 13:01:54 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag)
 	}
 }
 
-void	ft_sort_ls_t(char **tab, int i, size_t ct)
+void	ft_sort_ls_t(char **tab, size_t i, size_t ct)
 {
-	int			j;
+	size_t		j;
 	char		*st;
 	struct stat	bf1;
 	struct stat	bf2;
@@ -60,10 +60,10 @@ void	ft_sort_ls_t(char **tab, int i, size_t ct)
 	}
 }
 
-void	ft_sort_ls(char **tab, int i, size_t ct)
+void	ft_sort_ls(char **tab, size_t i, size_t ct)
 {
-	int		j;
-	char	*st;
+	size_t		j;
+	char		*st;
 
 	j = i;
 	while (j - i < ct - 1 && tab[j + 1])

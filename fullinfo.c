@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/04/29 16:05:03 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/10 16:45:20 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 ** ct is the number of line, the max value of **itab
 */
 
-int		*cntlen(char ***itab, size_t ct)
+size_t	*cntlen(char ***itab, size_t ct)
 {
-	int i;
-	int j;
-	int *len;
+	size_t	 i;
+	size_t	 j;
+	size_t	*len;
 
 	len = ft_memalloc(sizeof(int) * 8);
 	j = 0;
@@ -33,7 +33,14 @@ int		*cntlen(char ***itab, size_t ct)
 		while (i < ct)
 		{
 			if (ft_strlen(itab[i][j]) > len[j])
+			{
+				//ft_putnbr(ft_strlen(itab[i][j]));
+				//ft_putnbr(j);
+				//ft_putchar(' ');
 				len[j] = ft_strlen(itab[i][j]);
+				//ft_putstr(itab[i][j]);
+				//ft_putchar(' ');
+			}
 			i++;
 		}
 		if (j == 1 || j == 3 || j == 4)
@@ -67,10 +74,10 @@ void	setstr(char *bstr, char *str, size_t nbr)
 ** fusion take a **itab and concatenate all str in it plus the *tab str
 */
 
-char	*fusion(char *tab, char **itab, int *len)
+char	*fusion(char *tab, char **itab, size_t *len)
 {
 	char	*str;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	str = (char *)ft_memalloc(sizeof(char) * len[7] + 2);
@@ -91,8 +98,8 @@ char	*fusion(char *tab, char **itab, int *len)
 
 char	**fullinfo(char ***itab, char **tab, size_t ct)
 {
-	int	*len;
-	int	i;
+	size_t	*len;
+	size_t	i;
 
 	i = 0;
 	len = cntlen(itab, ct);

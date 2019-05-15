@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/10 13:40:32 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/15 15:53:49 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 		rep = readdir(dir);
 	}
 	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, ct);
-	flag % 5 == 0 ? ft_reverse_tab(tab, ct) : 19;
+	flag % 5 == 0 ? ft_reverse_tab(tab, ct, 0) : 19;
 	flag % 3 == 0 ? ft_addinfotab(tab, ct, type, str) : 19;
 	ft_puttab(tab, ct);
 	ft_tabdel(tab, ct);
@@ -146,12 +146,12 @@ int		main(int argc, char **argv)
 	if (argv[i])
 	{
 		ft_sort_ls(argv, i, argc);
-		flag % 5 == 0 ? ft_reverse_tab(argv, argc) : 19;
+		flag % 5 == 0 ? ft_reverse_tab(argv, argc, i) : 19;
 		while (argv[i])
 		{
 			if (ft_ls(flag, ft_strdup(argv[i++])) == 1)
-			if (argv[i])
-				ft_putchar('\n');
+				if (argv[i])
+					ft_putchar('\n');
 		}
 	}
 	else

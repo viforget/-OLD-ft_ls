@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/10 16:45:20 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/15 15:26:47 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ size_t	*cntlen(char ***itab, size_t ct)
 ** setstr fill bstr with str from bstr[nbr]
 */
 
-void	setstr(char *bstr, char *str, size_t nbr)
+void	setstr(char *bstr, char *str, int nbr)
 {
 	int i;
 
@@ -84,7 +84,7 @@ char	*fusion(char *tab, char **itab, size_t *len)
 	str = (char *)ft_memset(str, 32, len[7] + 1);
 	while (i < 8)
 	{
-		setstr(str, itab[i], len[i]);
+		setstr(str, itab[i], (int)len[i]);
 		i++;
 	}
 	str = ft_strjoindel2(str, tab);

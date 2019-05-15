@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/10 15:27:57 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/14 13:12:53 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	ft_file(char **argv, int i, int ct, int flag)
 			}
 			i++;
 		}
-		ft_addinfotab(tab, j, type, ft_strdup("./"));
-		ft_putchar('Z');
+		if (j != 0)
+			ft_addinfotab(tab, j, type, ft_strdup("./"));
 	}
 	else
 		ft_just_name_of_file(argv, i, ct);

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/14 13:12:53 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 11:08:18 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,23 @@ void	ft_file(char **argv, int i, int ct, int flag)
 			dir = opendir(argv[i]);
 			if(errno == ENOTDIR && dir == NULL)
 			{
-				tab[j++] = argv[i];
+				tab[j++] = ft_strdup(argv[i]);
 			}
 			i++;
 		}
 		if (j != 0)
+		{
 			ft_addinfotab(tab, j, type, ft_strdup("./"));
+			ft_puttab(tab, j);
+		}
+		while(ct > i)
+		{
+			if (tab[ct - 1])
+				ft_strdel(&tab[ct - 1]);
+			ct--;
+		}
+		//free(&tab);
 	}
 	else
 		ft_just_name_of_file(argv, i, ct);
-	/*while(i < ct)
-	{
-		dir = opendir(argv[i]);
-		if (errno == ENOTDIR)
-		{
-			if (flag % 3 == 0)
-				tab[j++] = ft_strdup(argv[i]);
-			else
-			{
-				ft_putendl(argv[i]);
-				j = 1;
-			}
-		}
-		i++;
-	}*/
 }

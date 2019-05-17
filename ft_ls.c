@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/15 15:53:49 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 11:12:09 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,9 @@ int		main(int argc, char **argv)
 		i++;
 	}
 	i < argc - 1 ? flag *= 13 : 19;
-	ft_file(argv, i, argc, flag);
 	if (argv[i])
 	{
+		ft_file(argv, i, argc, flag);
 		ft_sort_ls(argv, i, argc);
 		flag % 5 == 0 ? ft_reverse_tab(argv, argc, i) : 19;
 		while (argv[i])

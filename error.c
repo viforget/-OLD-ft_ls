@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:27:08 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/10 12:57:28 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 09:35:42 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		ft_putillop(char c)
 {
 	ft_putstr("ft_ls: illegal option -- ");
 	ft_putchar(c);
-	ft_putstr("\nusage: ft_ls [-Ralrt] [file ...]\n");
+	ft_putstr("\nusage: ft_ls [-Ralrt1] [file ...]\n");
 	return (0);
 }
 

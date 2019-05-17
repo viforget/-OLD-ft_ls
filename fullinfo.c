@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/15 15:26:47 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 11:50:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 ** ct is the number of line, the max value of **itab
 */
 
-size_t	*cntlen(char ***itab, size_t ct)
+int	*cntlen(char ***itab, int ct)
 {
-	size_t	 i;
-	size_t	 j;
-	size_t	*len;
+	int	 i;
+	int	 j;
+	int	*len;
 
 	len = ft_memalloc(sizeof(int) * 8);
 	j = 0;
@@ -34,12 +34,7 @@ size_t	*cntlen(char ***itab, size_t ct)
 		{
 			if (ft_strlen(itab[i][j]) > len[j])
 			{
-				//ft_putnbr(ft_strlen(itab[i][j]));
-				//ft_putnbr(j);
-				//ft_putchar(' ');
 				len[j] = ft_strlen(itab[i][j]);
-				//ft_putstr(itab[i][j]);
-				//ft_putchar(' ');
 			}
 			i++;
 		}
@@ -73,20 +68,30 @@ void	setstr(char *bstr, char *str, int nbr)
 /*
 ** fusion take a **itab and concatenate all str in it plus the *tab str
 */
+#include <stdio.h>
 
-char	*fusion(char *tab, char **itab, size_t *len)
+char	*fusion(char *tab, char **itab, int *len)
 {
 	char	*str;
-	size_t	i;
+	int		i;
+	int		ln;
 
 	i = 0;
-	str = (char *)ft_memalloc(sizeof(char) * len[7] + 2);
-	str = (char *)ft_memset(str, 32, len[7] + 1);
+	ln = len[7] + 2;
+	str = (char *)ft_memalloc(sizeof(char) * ln);
+	str = (char *)ft_memset(str, 32, ln - 1);
+	while (i < ln)
+	{
+		str[i] = ' ';
+		i++;
+	}
+	i = 0;
 	while (i < 8)
 	{
 		setstr(str, itab[i], (int)len[i]);
 		i++;
 	}
+	str[ln - 1] = '\0';
 	str = ft_strjoindel2(str, tab);
 	return (str);
 }
@@ -98,8 +103,8 @@ char	*fusion(char *tab, char **itab, size_t *len)
 
 char	**fullinfo(char ***itab, char **tab, size_t ct)
 {
-	size_t	*len;
-	size_t	i;
+	int	*len;
+	int	i;
 
 	i = 0;
 	len = cntlen(itab, ct);

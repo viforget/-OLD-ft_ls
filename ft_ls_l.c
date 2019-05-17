@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/17 10:19:09 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/17 11:13:25 by viforget         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_ls_l.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/17 10:17:17 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 16:48:46 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +20,8 @@ char	*setright(int mode, char c)
 {
 	char	right[11];
 
+	if (S_ISLNK(mode) && c == 'c')
+		c = 'l';
 	right[0] = c;
 	mode % 2 == 1 ? right[9] = 'x' :
 		(right[9] = '-');
@@ -123,3 +113,24 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	ft_putchar('\n');
 	ft_strdel(&str);
 }
+
+void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str)
+{
+	int		i;
+	size_t	tot;
+	char	***itab;
+	
+	tot = 0;
+	i = 0;
+	itab = (char ***)ft_memalloc(sizeof(char **) * ct);
+	while (i < ct)
+	{
+		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
+		tot += ft_addinfo(itab[i], tab[i], type[i], ft_strjoin(str, tab[i]));
+		i++;
+	}
+	tab = fullinfo(itab, tab, ct);
+	ft_strdel(&str);
+}
+
+

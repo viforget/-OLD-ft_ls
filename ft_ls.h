@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/15 15:52:20 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/17 16:03:37 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 int		ft_ls(int flag, char *str);
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str);
+void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str);
 void	ft_sort_ls(char **tab, size_t i, size_t ct);
 void	ft_sort_ls_t(char **tab, size_t i, size_t ct);
 void	ft_sort_tab_dir(struct dirent **tr, int flag);
@@ -38,5 +39,5 @@ void	ft_recursive_ls(char *s, int fg);
 size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat);
 void	ft_file(char **argv, int i, int ct, int flag);
 
-# define TYPE ".pc.d.b.-.l.s"
+# define TYPE "0pc.d.b.-.l.s"
 #endif

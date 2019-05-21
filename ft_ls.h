@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/17 16:03:37 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/21 12:18:08 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_recursive_ls(char *s, int fg);
 size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat);
 void	ft_file(char **argv, int i, int ct, int flag);
 
-# define TYPE "0pc.d.b.-.l.s"
+# define TYPE "cpc.d.b.-.l.s"
 #endif

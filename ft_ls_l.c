@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/21 12:17:10 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/22 13:21:05 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*setright(int mode, char c)
 ** Put the date information in the str "itab"
 */
 
-char	**setdate(char **date, char **itab, char *size, time_t ct)
+char	**setdate(char **date, char **itab, time_t ct)
 {
 	date[4][4] = '\0';
 	date[3][5] = '\0';
@@ -59,7 +59,6 @@ char	**setdate(char **date, char **itab, char *size, time_t ct)
 		itab[7] = ft_strdup(date[4]);
 	itab[6] = ft_strdup(date[2]);
 	itab[5] = ft_strdup(date[1]);
-	itab[4] = size;
 	return (itab);
 }
 
@@ -80,7 +79,11 @@ size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 	ginfo = getpwuid(stt.st_uid);
 	itab[0] = setright(stt.st_mode, TYPE[type]);
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
-	itab = setdate(date, itab, ft_itoa(stt.st_size), stt.st_mtime);
+	itab = setdate(date, itab, stt.st_mtime);
+	if (itab[0][0] == 'c' || itab[0][0] == 'b')
+		itab[4] = majmin(stt.st_rdev);
+	else
+		itab[4] = ft_itoa(stt.st_size);
 	itab[3] = ft_strdup(getgrgid(ginfo->pw_gid)->gr_name);
 	itab[2] = ft_strdup(ginfo->pw_name);
 	itab[1] = ft_itoa(stt.st_nlink);

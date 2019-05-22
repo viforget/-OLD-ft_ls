@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/17 11:50:44 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/22 16:57:08 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,31 @@ int	*cntlen(char ***itab, int ct)
 ** setstr fill bstr with str from bstr[nbr]
 */
 
+char	*majmin(dev_t rdev)
+{
+	char	 *str;
+	char	 *tp;
+	int		i;
+	int		j;
+
+	str = (char *)malloc(sizeof(char) * 8);
+	str = ft_memset(str, ' ', 8);
+		tp = ft_itoa(major(rdev));
+	i = ft_strlen(tp) - 1;
+	j = 1;
+	while(i >= 0)
+		str[j--] = tp[i--];
+	ft_strdel(&tp);
+	tp = ft_itoa(minor(rdev));
+	i = ft_strlen(tp) - 1;
+	j = 6;
+	while(i >= 0)
+		str[j--] = tp[i--];
+	str[2] = ',';
+	ft_strdel(&tp);
+	return (str);
+}
+
 void	setstr(char *bstr, char *str, int nbr)
 {
 	int i;
@@ -68,7 +93,6 @@ void	setstr(char *bstr, char *str, int nbr)
 /*
 ** fusion take a **itab and concatenate all str in it plus the *tab str
 */
-#include <stdio.h>
 
 char	*fusion(char *tab, char **itab, int *len)
 {

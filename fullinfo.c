@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/22 16:57:08 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/27 17:49:31 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,20 @@ void	setstr(char *bstr, char *str, int nbr)
 	}
 }
 
+void	setstr2(char *bstr, char *str, int nbr)
+{
+	int i;
+
+	i = 0;
+	nbr++;
+	while (bstr[nbr] && str[i])
+	{
+		bstr[nbr] = str[i];
+		i++;
+		nbr++;
+	}
+}
+
 /*
 ** fusion take a **itab and concatenate all str in it plus the *tab str
 */
@@ -112,7 +126,10 @@ char	*fusion(char *tab, char **itab, int *len)
 	i = 0;
 	while (i < 8)
 	{
-		setstr(str, itab[i], (int)len[i]);
+		if (i == 2 || i == 3)
+			setstr2(str, itab[i], (int)len[i - 1]);
+		else
+			setstr(str, itab[i], (int)len[i]);
 		i++;
 	}
 	str[ln - 1] = '\0';

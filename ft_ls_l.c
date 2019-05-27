@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/22 13:21:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:38:11 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str)
 	while (i < ct)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
-		tot += ft_addinfo(itab[i], tab[i], type[i], ft_strjoin(str, tab[i]));
+		tot += ft_addinfo(itab[i], tab[i], type[i], tab[i][0] == '/' ? 
+				ft_strdup(tab[i]) :ft_strjoin(str, tab[i]));
 		i++;
 	}
 	tab = fullinfo(itab, tab, ct);

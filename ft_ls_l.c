@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/27 18:38:11 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/28 14:41:21 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 		itab[4] = majmin(stt.st_rdev);
 	else
 		itab[4] = ft_itoa(stt.st_size);
-	itab[3] = ft_strdup(getgrgid(ginfo->pw_gid)->gr_name);
+	itab[3] = ft_strdup(getgrgid(stt.st_gid)->gr_name);
 	itab[2] = ft_strdup(ginfo->pw_name);
 	itab[1] = ft_itoa(stt.st_nlink);
 	ft_strdel(&pat);

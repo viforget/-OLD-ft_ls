@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 14:41:21 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/28 16:28:36 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 	struct passwd	*ginfo;
 	char			**date;
 
+	ft_putchar(type);
 	lstat(pat, &stt);
 	ginfo = getpwuid(stt.st_uid);
 	itab[0] = setright(stt.st_mode, TYPE[type]);

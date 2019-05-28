@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/27 17:49:31 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/28 16:23:02 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*majmin(dev_t rdev)
 
 	str = (char *)malloc(sizeof(char) * 8);
 	str = ft_memset(str, ' ', 8);
-		tp = ft_itoa(major(rdev));
+	tp = ft_itoa(major(rdev));
 	i = ft_strlen(tp) - 1;
 	j = 1;
 	while(i >= 0)

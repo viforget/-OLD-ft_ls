@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/17 13:27:07 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/28 16:30:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,32 @@ void	ft_just_name_of_file(char **argv, int i, int ct)
 		}
 		dir != NULL ? b2 = 1: 19;
 		i++;
-		
+
 	}
 	if (b == 1 && b2 == 1)
 		ft_putchar('\n');
+}
+
+char	puttype(char *str)
+{
+	struct stat buf;
+
+	lstat(str, &buf);
+	if (S_ISREG(buf.st_mode))
+		return (8);
+	else if (S_ISDIR(buf.st_mode))
+		return (4);
+	else if (S_ISCHR(buf.st_mode))
+		return (2);
+	else if (S_ISBLK(buf.st_mode))
+		return (3);
+	else if (S_ISFIFO(buf.st_mode))
+		return (1);
+	else if (S_ISLNK(buf.st_mode))
+		return (10);
+	else if (S_ISSOCK(buf.st_mode))
+		return (12);
+	return (0);
 }
 
 void	ft_file(char **argv, int i, int ct, int flag)
@@ -48,13 +70,15 @@ void	ft_file(char **argv, int i, int ct, int flag)
 	{
 		tab = (char **)ft_memalloc(sizeof(char *) * (ct - i + 1));
 		type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct - i);
-		ft_memset(type, DT_REG, ct - i);
+		//ft_memset(type, DT_REG, ct - i);
 		while (i < ct)
 		{
 			dir = opendir(argv[i]);
 			if(errno == ENOTDIR && dir == NULL)
 			{
-				tab[j++] = ft_strdup(argv[i]);
+				type[j] = puttype(argv[i]);
+				tab[j] = ft_strdup(argv[i]);
+				j++;
 			}
 			i++;
 		}

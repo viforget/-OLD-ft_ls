@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:27:08 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:36:52 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:50:50 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int		ft_puterror(char *str, int e)
 	if (e == EACCES)
 	{
 		errpermden(str);
-		return(0);
+		return (0);
 	}
 	if (e == ENOENT)
 	{
 		ft_enoent(str);
-		return(0);
+		return (0);
 	}
-	return(1);
+	return (1);
 }

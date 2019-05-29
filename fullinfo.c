@@ -6,46 +6,11 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:46:04 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:54:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-/*
-** When the flag "-l" is activate, this function count the maximum number of
-**character in each column
-** ***itab is a tab of tab of str, the function will count in it
-** ct is the number of line, the max value of **itab
-*/
-
-int	*cntlen(char ***itab, int ct)
-{
-	int	 i;
-	int	 j;
-	int	*len;
-
-	len = ft_memalloc(sizeof(int) * 8);
-	j = 0;
-	while (j < 8)
-	{
-		i = 0;
-		while (i < ct && itab[i][j])
-		{
-			if (ft_strlen(itab[i][j]) > (size_t)len[j])
-			{
-				len[j] = ft_strlen(itab[i][j]);
-			}
-			i++;
-		}
-		if (j == 1 || j == 3 || j == 4)
-			len[j] += len[j - 1] + 2;
-		else if (j != 0)
-			len[j] += len[j - 1] + 1;
-		j++;
-	}
-	return (len);
-}
 
 /*
 ** setstr fill bstr with str from bstr[nbr]
@@ -53,8 +18,8 @@ int	*cntlen(char ***itab, int ct)
 
 char	*majmin(dev_t rdev)
 {
-	char	 *str;
-	char	 *tp;
+	char	*str;
+	char	*tp;
 	int		i;
 	int		j;
 
@@ -63,13 +28,13 @@ char	*majmin(dev_t rdev)
 	tp = ft_itoa(major(rdev));
 	i = ft_strlen(tp) - 1;
 	j = 1;
-	while(i >= 0)
+	while (i >= 0)
 		str[j--] = tp[i--];
 	ft_strdel(&tp);
 	tp = ft_itoa(minor(rdev));
 	i = ft_strlen(tp) - 1;
 	j = 6;
-	while(i >= 0)
+	while (i >= 0)
 		str[j--] = tp[i--];
 	str[2] = ',';
 	ft_strdel(&tp);

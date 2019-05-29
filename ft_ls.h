@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:44:28 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:54:11 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_puterror(char *str, int e);
 void	ft_recursive_ls(char *s, int fg);
 void	ft_file(char **argv, int i, int ct, int flag);
 char	*majmin(dev_t rdev);
+int		*cntlen(char ***itab, int ct);
 
 # define TYPE "cpc.d.b.-.l.s"
 #endif

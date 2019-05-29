@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 04:00:04 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:44:28 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag);
 char	**fullinfo(char ***itab, char **tab, size_t ct);
 void	ft_reverse_tab(char **tab, size_t ct, int i);
 int		ft_putillop(char c);
-int		ft_puterror(char *str, int e, int flag);
+int		ft_puterror(char *str, int e);
 void	ft_recursive_ls(char *s, int fg);
-size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat);
 void	ft_file(char **argv, int i, int ct, int flag);
 char	*majmin(dev_t rdev);
 

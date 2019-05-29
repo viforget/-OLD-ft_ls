@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 10:54:14 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:44:09 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**setdate(char **date, char **itab, time_t ct)
 ** pat is the path of the file/directory
 */
 
-size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
+size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 {
 	struct stat		stt;
 	struct passwd	*ginfo;
@@ -107,10 +107,10 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	tot = 0;
 	i = 0;
 	itab = (char ***)ft_memalloc(sizeof(char **) * ct);
-	while (i < ct)
+	while ((size_t)i < ct)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
-		tot += ft_addinfo(itab[i], tab[i], type[i], ft_strjoin(str, tab[i]));
+		tot += ft_addinfo(itab[i], type[i], ft_strjoin(str, tab[i]));
 		i++;
 	}
 	tab = fullinfo(itab, tab, ct);
@@ -129,10 +129,10 @@ void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str)
 	tot = 0;
 	i = 0;
 	itab = (char ***)ft_memalloc(sizeof(char **) * ct);
-	while (i < ct)
+	while ((size_t)i < ct)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
-		tot += ft_addinfo(itab[i], tab[i], type[i], tab[i][0] == '/' ? 
+		tot += ft_addinfo(itab[i], type[i], tab[i][0] == '/' ? 
 				ft_strdup(tab[i]) :ft_strjoin(str, tab[i]));
 		i++;
 	}

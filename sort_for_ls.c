@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/15 15:52:45 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:46:37 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_reverse_tab(char **tab, size_t ct, int i)
 	char	*buf;
 
 	ct--;
-	while (i < ct)
+	while ((size_t)i < ct)
 	{
 		buf = tab[i];
 		tab[i] = tab[ct];

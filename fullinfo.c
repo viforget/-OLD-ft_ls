@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 10:40:32 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:46:04 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	*cntlen(char ***itab, int ct)
 		i = 0;
 		while (i < ct && itab[i][j])
 		{
-			if (ft_strlen(itab[i][j]) > len[j])
+			if (ft_strlen(itab[i][j]) > (size_t)len[j])
 			{
 				len[j] = ft_strlen(itab[i][j]);
 			}
@@ -149,7 +149,7 @@ char	**fullinfo(char ***itab, char **tab, size_t ct)
 
 	i = 0;
 	len = cntlen(itab, ct);
-	while (i < ct)
+	while ((size_t)i < ct)
 	{
 		tab[i] = fusion(tab[i], itab[i], len);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:22:30 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:37:51 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		ft_ls(int flag, char *str)
 	else if (errno != 0)
 	{
 		//ft_putendl(str);
-		ft_puterror(str, errno, flag);
+		ft_puterror(str, errno);
 	}
 	if (flag % 7 == 0 && n == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 04:01:30 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 11:22:30 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,18 @@ size_t	ft_countfile(char *str, int flag)
 ** find, sort and display all informations(name, flag -l)
 */
 
-void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
+int		ft_affls(DIR *dir, int flag, size_t ct, char *str)
 {
 	struct dirent	*rep;
 	char			**tab;
 	unsigned char	*type;
 	size_t			i;
+	int				n;
 
 	i = 0;
+	n = 0;
 	if (ct == 0)
-		return ;
+		return (0);
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
 	type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct);
 	rep = readdir(dir);
@@ -92,6 +94,7 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	{
 		if (!(rep->d_name[0] == '.' && flag % 2 != 0))
 		{
+			rep->d_type == 4 ? n = 1 : 0;
 			type[i] = rep->d_type;
 			tab[i++] = ft_strdup(rep->d_name);
 		}
@@ -102,11 +105,13 @@ void	ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	flag % 3 == 0 ? ft_addinfotab(tab, ct, type, str) : 19;
 	ft_puttab(tab, ct);
 	ft_tabdel(tab, ct);
+	return (n);
 }
 
 int		ft_ls(int flag, char *str)
 {
 	DIR	*dir;
+	int	n;
 
 	dir = opendir(str);
 	if (dir == NULL && errno == ENOTDIR)
@@ -118,12 +123,15 @@ int		ft_ls(int flag, char *str)
 	}
 	if (dir != NULL)
 	{
-		ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
+		n = ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
 		closedir(dir);
 	}
 	else if (errno != 0)
+	{
+		//ft_putendl(str);
 		ft_puterror(str, errno, flag);
-	if (flag % 7 == 0)
+	}
+	if (flag % 7 == 0 && n == 1)
 	{
 		ft_recursive_ls(str, flag);
 	}

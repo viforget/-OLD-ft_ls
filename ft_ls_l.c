@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 16:28:36 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 06:31:17 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ size_t	ft_addinfo(char **itab, char *str, unsigned char type, char *pat)
 	struct passwd	*ginfo;
 	char			**date;
 
-	ft_putchar(type);
+	//ft_putchar(type);
 	lstat(pat, &stt);
 	ginfo = getpwuid(stt.st_uid);
+	if (ginfo == NULL)
+		return (0);
 	itab[0] = setright(stt.st_mode, TYPE[type]);
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
 	itab = setdate(date, itab, stt.st_mtime);
@@ -123,7 +125,7 @@ void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str)
 	int		i;
 	size_t	tot;
 	char	***itab;
-	
+
 	tot = 0;
 	i = 0;
 	itab = (char ***)ft_memalloc(sizeof(char **) * ct);

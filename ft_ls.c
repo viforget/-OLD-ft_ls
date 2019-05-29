@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 15:09:44 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 04:01:30 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ size_t	ft_countfile(char *str, int flag)
 			nb++;
 		rep = readdir(dir);
 	}
+	closedir(dir);
 	return (nb);
 }
 
@@ -120,10 +121,12 @@ int		ft_ls(int flag, char *str)
 		ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
 		closedir(dir);
 	}
-	if (errno != 0)
+	else if (errno != 0)
 		ft_puterror(str, errno, flag);
 	if (flag % 7 == 0)
+	{
 		ft_recursive_ls(str, flag);
+	}
 	ft_strdel(&str);
 	return (1);
 }

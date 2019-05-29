@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 16:23:02 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/29 06:28:16 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	*cntlen(char ***itab, int ct)
 	while (j < 8)
 	{
 		i = 0;
-		while (i < ct)
+		while (i < ct && itab[i][j])
 		{
 			if (ft_strlen(itab[i][j]) > len[j])
 			{

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 16:30:44 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/28 16:40:38 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_just_name_of_file(char **argv, int i, int ct)
 
 	b = 0;
 	b2 = 0;
-	while(i < ct)
+	while (i < ct)
 	{
 		dir = opendir(argv[i]);
 		if (dir == NULL && errno == ENOTDIR)
@@ -28,9 +28,8 @@ void	ft_just_name_of_file(char **argv, int i, int ct)
 			b = 1;
 			ft_putendl(argv[i]);
 		}
-		dir != NULL ? b2 = 1: 19;
+		dir != NULL ? b2 = 1 : 19;
 		i++;
-
 	}
 	if (b == 1 && b2 == 1)
 		ft_putchar('\n');
@@ -74,7 +73,7 @@ void	ft_file(char **argv, int i, int ct, int flag)
 		while (i < ct)
 		{
 			dir = opendir(argv[i]);
-			if(errno == ENOTDIR && dir == NULL)
+			if (errno == ENOTDIR && dir == NULL)
 			{
 				type[j] = puttype(argv[i]);
 				tab[j] = ft_strdup(argv[i]);
@@ -87,7 +86,7 @@ void	ft_file(char **argv, int i, int ct, int flag)
 			ft_addinfotab2(tab, j, type, ft_strdup("./"));
 			ft_puttab(tab, j);
 		}
-		while(ct > i)
+		while (ct > i)
 		{
 			if (tab[ct - 1])
 				ft_strdel(&tab[ct - 1]);

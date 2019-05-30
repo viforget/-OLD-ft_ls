@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:37:51 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/30 20:54:28 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ size_t	ft_countfile(char *str, int flag)
 	size_t			nb;
 
 	nb = 0;
-	dir = opendir(str);
+	if (!(dir = opendir(str)))
+		return (0);
 	rep = readdir(dir);
 	while (rep)
 	{
@@ -129,7 +130,8 @@ int		ft_ls(int flag, char *str)
 	else if (errno != 0)
 	{
 		//ft_putendl(str);
-		ft_puterror(str, errno);
+		if (ft_puterror(str, errno) == 0)
+			n = 0;
 	}
 	if (flag % 7 == 0 && n == 1)
 	{

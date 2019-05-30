@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:44:09 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/30 20:48:49 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 {
 	struct stat		stt;
 	struct passwd	*ginfo;
+	struct group	*group;
 	char			**date;
 
 	lstat(pat, &stt);
@@ -84,7 +85,12 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 		itab[4] = majmin(stt.st_rdev);
 	else
 		itab[4] = ft_itoa(stt.st_size);
-	itab[3] = ft_strdup(getgrgid(stt.st_gid)->gr_name);
+	if ((group = getgrgid(stt.st_gid)))
+		itab[3] = ft_strdup(group->gr_name);
+	else
+	{
+		itab[3] = NULL;
+	}
 	if (ginfo == NULL)
 		itab[2] = ft_strdup("502");
 	else
@@ -111,6 +117,12 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
 		tot += ft_addinfo(itab[i], type[i], ft_strjoin(str, tab[i]));
+		if (itab[i][3] == NULL)
+		{
+			tab[0] = ft_strdup("");
+			ft_strdel(&str);
+			return ;
+		}
 		i++;
 	}
 	tab = fullinfo(itab, tab, ct);

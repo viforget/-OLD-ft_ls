@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:56:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/05/30 18:28:32 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag)
 			st = tr[j];
 			tr[j] = tr[j + 1];
 			tr[j + 1] = st;
-			j = 0;
+			j > 0 ? j-- : (j = 0);
 		}
 		else
 		{
@@ -88,7 +88,7 @@ void	ft_sort_ls_t(char **tab, size_t i, size_t ct)
 			st = tab[j];
 			tab[j] = tab[j + 1];
 			tab[j + 1] = st;
-			j = i;
+			j > i ? j-- : (j = i);
 		}
 		else
 			j++;
@@ -108,7 +108,7 @@ void	ft_sort_ls(char **tab, size_t i, size_t ct)
 			st = tab[j];
 			tab[j] = tab[j + 1];
 			tab[j + 1] = st;
-			j = i;
+			j > i ? j-- : (j = i);
 		}
 		else
 		{

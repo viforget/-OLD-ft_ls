@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/30 20:48:49 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/01 19:36:40 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 		tot += ft_addinfo(itab[i], type[i], ft_strjoin(str, tab[i]));
 		if (itab[i][3] == NULL)
 		{
-			tab[0] = ft_strdup("");
-			ft_strdel(&str);
+			tab[0] = ft_strdup("Error: impossible right");
 			return ;
 		}
 		i++;
@@ -129,7 +128,6 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	ft_putstr("total ");
 	ft_putnbr(tot);
 	ft_putchar('\n');
-	ft_strdel(&str);
 }
 
 void	ft_addinfotab2(char **tab, size_t ct, unsigned char *type, char *str)

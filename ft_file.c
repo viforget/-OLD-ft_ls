@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/28 16:40:38 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/01 19:33:20 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_just_name_of_file(char **argv, int i, int ct)
 		}
 		dir != NULL ? b2 = 1 : 19;
 		i++;
+		closedir(dir);
 	}
 	if (b == 1 && b2 == 1)
 		ft_putchar('\n');
@@ -57,6 +58,19 @@ char	puttype(char *str)
 	return (0);
 }
 
+void		ft_tabstrdel(char **tab)
+{
+	int i;
+
+	i = 0;
+	while(tab[i])
+	{
+		ft_strdel(&(tab[i]));
+		i++;
+	}
+	ft_memdel((void **)tab);
+}
+
 void	ft_file(char **argv, int i, int ct, int flag)
 {
 	DIR				*dir;
@@ -69,7 +83,6 @@ void	ft_file(char **argv, int i, int ct, int flag)
 	{
 		tab = (char **)ft_memalloc(sizeof(char *) * (ct - i + 1));
 		type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct - i);
-		//ft_memset(type, DT_REG, ct - i);
 		while (i < ct)
 		{
 			dir = opendir(argv[i]);
@@ -80,6 +93,7 @@ void	ft_file(char **argv, int i, int ct, int flag)
 				j++;
 			}
 			i++;
+			closedir(dir);
 		}
 		if (j != 0)
 		{
@@ -92,7 +106,8 @@ void	ft_file(char **argv, int i, int ct, int flag)
 				ft_strdel(&tab[ct - 1]);
 			ct--;
 		}
-		//free(&tab);
+		ft_tabstrdel(tab);
+		free(type);
 	}
 	else
 		ft_just_name_of_file(argv, i, ct);

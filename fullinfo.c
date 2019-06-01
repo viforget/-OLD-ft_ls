@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/29 11:54:44 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/01 15:43:04 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,6 @@ char	**fullinfo(char ***itab, char **tab, size_t ct)
 		tab[i] = fusion(tab[i], itab[i], len);
 		i++;
 	}
+	free(len);
 	return (tab);
 }

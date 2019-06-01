@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:41:43 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/30 19:19:15 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/01 17:27:44 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ void			ft_recursive_ls(char *s, int fg)
 					&& trep[ct]->d_name[0] == '.') && trep[ct]->d_name[0] > 31)
 		{
 			ft_putchar('\n');
-			//ft_putendl(trep[ct]->d_name);
 			ft_ls((fg % 13 == 0) ? fg : fg * 13,
 				ft_strjoin(s, trep[ct]->d_name));
 		}
 		ct++;
 	}
+	(!s) ? 1 : ft_strdel(&s);
+	ft_memdel((void **)&trep);
 	closedir(dir);
 }

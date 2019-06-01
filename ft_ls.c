@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/30 20:54:28 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/01 19:36:54 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int		ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	i = 0;
 	n = 0;
 	if (ct == 0)
+	{
+		ft_strdel(&str);
 		return (0);
+	}
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
 	type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct);
 	rep = readdir(dir);
@@ -104,7 +107,9 @@ int		ft_affls(DIR *dir, int flag, size_t ct, char *str)
 	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, ct);
 	flag % 5 == 0 ? ft_reverse_tab(tab, ct, 0) : 19;
 	flag % 3 == 0 ? ft_addinfotab(tab, ct, type, str) : 19;
+	ft_strdel(&str);
 	ft_puttab(tab, ct);
+	ft_memdel((void **)&type);
 	ft_tabdel(tab, ct);
 	return (n);
 }
@@ -116,7 +121,10 @@ int		ft_ls(int flag, char *str)
 
 	dir = opendir(str);
 	if (dir == NULL && errno == ENOTDIR)
+	{
+		ft_strdel(&str);
 		return (0);
+	}
 	if (flag % 13 == 0 && dir != NULL)//Ne plus y gerer les erreurs ici
 	{
 		ft_putstr(str);
@@ -127,12 +135,8 @@ int		ft_ls(int flag, char *str)
 		n = ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
 		closedir(dir);
 	}
-	else if (errno != 0)
-	{
-		//ft_putendl(str);
-		if (ft_puterror(str, errno) == 0)
-			n = 0;
-	}
+	else if (errno != 0 && ft_puterror(str, errno) == 0)
+		n = 0;
 	if (flag % 7 == 0 && n == 1)
 	{
 		ft_recursive_ls(str, flag);
@@ -169,4 +173,5 @@ int		main(int argc, char **argv)
 	}
 	else
 		ft_ls(flag, ft_strdup("."));
+	return (0);
 }

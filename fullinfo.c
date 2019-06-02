@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/01 15:43:04 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/02 17:54:20 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	setstr(char *bstr, char *str, int nbr)
 		i--;
 		nbr--;
 	}
+	free(str);
 }
 
 void	setstr2(char *bstr, char *str, int nbr)
@@ -67,6 +68,7 @@ void	setstr2(char *bstr, char *str, int nbr)
 		i++;
 		nbr++;
 	}
+	free(str);
 }
 
 /*
@@ -99,6 +101,7 @@ char	*fusion(char *tab, char **itab, int *len)
 	}
 	str[ln - 1] = '\0';
 	str = ft_strjoindel2(str, tab);
+	free(itab);
 	return (str);
 }
 
@@ -119,6 +122,7 @@ char	**fullinfo(char ***itab, char **tab, size_t ct)
 		tab[i] = fusion(tab[i], itab[i], len);
 		i++;
 	}
+	free(itab);
 	free(len);
 	return (tab);
 }

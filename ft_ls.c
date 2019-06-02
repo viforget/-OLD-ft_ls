@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/01 19:36:54 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/02 18:59:38 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		ft_ls(int flag, char *str)
 		ft_strdel(&str);
 		return (0);
 	}
-	if (flag % 13 == 0 && dir != NULL)//Ne plus y gerer les erreurs ici
+	if (flag % 13 == 0 && dir != NULL)
 	{
 		ft_putstr(str);
 		ft_putstr(":\n");

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/01 19:28:26 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/02 18:14:11 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_file(char **argv, int i, int ct, int flag);
 char	*majmin(dev_t rdev);
 int		*cntlen(char ***itab, int ct);
 void	ft_tabstrdel(char **tab);
+void	ft_freeitab(char ***itab);
 
 # define TYPE "cpc.d.b.-.l.s"
 #endif

@@ -6,11 +6,25 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:41:43 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/01 17:27:44 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/02 18:14:06 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void	ft_freeitab(char ***itab)
+{
+	int i;
+
+	i = 0;
+	while(i < 8)
+	{
+		free(itab[0][i]);
+		i++;
+	}
+	free(itab[0]);
+	free(itab);
+}
 
 /*
 ** find every subdirectory and return a tab

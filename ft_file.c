@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/01 19:33:20 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/02 18:52:15 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ void	ft_just_name_of_file(char **argv, int i, int ct)
 			b = 1;
 			ft_putendl(argv[i]);
 		}
-		dir != NULL ? b2 = 1 : 19;
+		if (dir != NULL)
+		{
+			closedir(dir);
+			b2 = 1;
+		}
 		i++;
-		closedir(dir);
 	}
 	if (b == 1 && b2 == 1)
 		ft_putchar('\n');
@@ -68,7 +71,7 @@ void		ft_tabstrdel(char **tab)
 		ft_strdel(&(tab[i]));
 		i++;
 	}
-	ft_memdel((void **)tab);
+	free(tab);
 }
 
 void	ft_file(char **argv, int i, int ct, int flag)
@@ -92,13 +95,18 @@ void	ft_file(char **argv, int i, int ct, int flag)
 				tab[j] = ft_strdup(argv[i]);
 				j++;
 			}
+			else if (dir != NULL)
+			{
+				flag % 17 == 0 ? 1 : (flag *= 17);
+				closedir(dir);
+			}
 			i++;
-			closedir(dir);
 		}
 		if (j != 0)
 		{
 			ft_addinfotab2(tab, j, type, ft_strdup("./"));
 			ft_puttab(tab, j);
+			flag % 17 == 0 ? ft_putchar('\n') : 0;
 		}
 		while (ct > i)
 		{

@@ -6,13 +6,13 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/02 18:52:15 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/04 17:18:09 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_just_name_of_file(char **argv, int i, int ct)
+void	jstname(char **argv, int i, int ct)
 {
 	char	b;
 	char	b2;
@@ -61,12 +61,12 @@ char	puttype(char *str)
 	return (0);
 }
 
-void		ft_tabstrdel(char **tab)
+void	ft_tabstrdel(char **tab)
 {
 	int i;
 
 	i = 0;
-	while(tab[i])
+	while (tab[i])
 	{
 		ft_strdel(&(tab[i]));
 		i++;
@@ -82,41 +82,30 @@ void	ft_file(char **argv, int i, int ct, int flag)
 	int				j;
 
 	j = 0;
-	if (flag % 3 == 0)
+	tab = (char **)ft_memalloc(sizeof(char *) * (ct - i + 1));
+	type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct - i);
+	while (i < ct)
 	{
-		tab = (char **)ft_memalloc(sizeof(char *) * (ct - i + 1));
-		type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct - i);
-		while (i < ct)
+		dir = opendir(argv[i]);
+		if (errno == ENOTDIR && dir == NULL)
 		{
-			dir = opendir(argv[i]);
-			if (errno == ENOTDIR && dir == NULL)
-			{
-				type[j] = puttype(argv[i]);
-				tab[j] = ft_strdup(argv[i]);
-				j++;
-			}
-			else if (dir != NULL)
-			{
-				flag % 17 == 0 ? 1 : (flag *= 17);
-				closedir(dir);
-			}
-			i++;
+			type[j] = puttype(argv[i]);
+			tab[j] = ft_strdup(argv[i]);
+			j++;
 		}
-		if (j != 0)
+		else if (dir != NULL)
 		{
-			ft_addinfotab2(tab, j, type, ft_strdup("./"));
-			ft_puttab(tab, j);
-			flag % 17 == 0 ? ft_putchar('\n') : 0;
+			flag % 17 == 0 ? 1 : (flag *= 17);
+			closedir(dir);
 		}
-		while (ct > i)
-		{
-			if (tab[ct - 1])
-				ft_strdel(&tab[ct - 1]);
-			ct--;
-		}
-		ft_tabstrdel(tab);
-		free(type);
+		i++;
 	}
-	else
-		ft_just_name_of_file(argv, i, ct);
+	if (j != 0)
+	{
+		ft_addinfotab2(tab, j, type, ft_strdup("./"));
+		ft_puttab(tab, j);
+		flag % 17 == 0 ? ft_putchar('\n') : 0;
+	}
+	ft_tabstrdel(tab);
+	free(type);
 }

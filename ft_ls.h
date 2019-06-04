@@ -6,14 +6,14 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/02 18:14:11 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/04 17:11:22 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-#include <errno.h>
+# include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <pwd.h>
@@ -41,6 +41,11 @@ char	*majmin(dev_t rdev);
 int		*cntlen(char ***itab, int ct);
 void	ft_tabstrdel(char **tab);
 void	ft_freeitab(char ***itab);
+int		freeandret(char **s);
+void	ft_freedom(char **s, char **tab, size_t ct, unsigned char **type);
+void	ft_sorting(char **tab, size_t ct, int flag);
+void	readdir2(DIR *dir);
+void	jstname(char **argv, int i, int ct);
 
 # define TYPE "cpc.d.b.-.l.s"
 #endif

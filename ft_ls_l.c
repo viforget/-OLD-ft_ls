@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/02 18:17:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:43:00 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	**setdate(char **date, char **itab, time_t ct)
 		free(date[i]);
 		i++;
 	}
+	free(date);
 	return (itab);
 }
 
@@ -88,8 +89,7 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 	ginfo = getpwuid(stt.st_uid);
 	itab[0] = setright(stt.st_mode, TYPE[type]);
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
-	itab = setdate(date, itab, stt.st_mtime);
-	free(date);
+	setdate(date, itab, stt.st_mtime);
 	if (itab[0][0] == 'c' || itab[0][0] == 'b')
 		itab[4] = majmin(stt.st_rdev);
 	else
@@ -97,9 +97,7 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 	if ((group = getgrgid(stt.st_gid)))
 		itab[3] = ft_strdup(group->gr_name);
 	else
-	{
 		itab[3] = NULL;
-	}
 	if (ginfo == NULL)
 		itab[2] = ft_strdup("502");
 	else

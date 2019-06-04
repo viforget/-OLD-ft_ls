@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 14:15:59 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/02 18:59:38 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:37:00 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,6 @@ int		ft_affls(DIR *dir, int flag, size_t ct, char *str)
 
 	i = 0;
 	n = 0;
-	if (ct == 0)
-	{
-		ft_strdel(&str);
-		return (0);
-	}
 	tab = (char **)ft_memalloc(sizeof(char *) * ct);
 	type = (unsigned char *)ft_memalloc(sizeof(unsigned char) * ct);
 	rep = readdir(dir);
@@ -104,13 +99,9 @@ int		ft_affls(DIR *dir, int flag, size_t ct, char *str)
 		}
 		rep = readdir(dir);
 	}
-	flag % 11 == 0 ? ft_sort_ls_t(tab, 0, ct) : ft_sort_ls(tab, 0, ct);
-	flag % 5 == 0 ? ft_reverse_tab(tab, ct, 0) : 19;
+	ft_sorting(tab, ct, flag);
 	flag % 3 == 0 ? ft_addinfotab(tab, ct, type, str) : 19;
-	ft_strdel(&str);
-	ft_puttab(tab, ct);
-	ft_memdel((void **)&type);
-	ft_tabdel(tab, ct);
+	ft_freedom(&str, tab, ct, &type);
 	return (n);
 }
 
@@ -121,27 +112,22 @@ int		ft_ls(int flag, char *str)
 
 	dir = opendir(str);
 	if (dir == NULL && errno == ENOTDIR)
-	{
-		ft_strdel(&str);
-		return (0);
-	}
+		return (freeandret(&str));
 	if (flag % 13 == 0 && dir != NULL)
 	{
 		ft_putstr(str);
 		ft_putstr(":\n");
 	}
-	if (dir != NULL)
-	{
+	if (dir != NULL && ft_countfile(str, flag) != 0)
 		n = ft_affls(dir, flag, ft_countfile(str, flag), ft_strjoin(str, "/"));
+	if (dir != NULL)
 		closedir(dir);
-	}
 	else if (errno != 0 && ft_puterror(str, errno) == 0)
 		n = 0;
 	if (flag % 7 == 0 && n == 1)
-	{
 		ft_recursive_ls(str, flag);
-	}
-	ft_strdel(&str);
+	else
+		ft_strdel(&str);
 	return (1);
 }
 
@@ -153,15 +139,12 @@ int		main(int argc, char **argv)
 	i = 1;
 	flag = 1;
 	while (argv[i] && argv[i][0] == '-')
-	{
-		if (!(flag *= alprime(argv[i])))
+		if (!(flag *= alprime(argv[i++])))
 			return (0);
-		i++;
-	}
 	i < argc - 1 ? flag *= 13 : 19;
 	if (argv[i])
 	{
-		ft_file(argv, i, argc, flag);
+		flag % 3 == 0 ? ft_file(argv, i, argc, flag) : jstname(argv, i, argc);
 		ft_sort_ls(argv, i, argc);
 		flag % 5 == 0 ? ft_reverse_tab(argv, argc, i) : 19;
 		while (argv[i])

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 15:41:43 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/04 19:34:20 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/05 19:02:00 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 void			ft_freeitab(char ***itab)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
-	while (i < 8)
+	while (itab[j])
 	{
-		free(itab[0][i]);
-		i++;
+		while (i < 8)
+		{
+			free(itab[j][i]);
+			i++;
+		}
+		j++;
 	}
 	free(itab[0]);
 	free(itab);

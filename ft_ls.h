@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/04 17:11:22 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/05 19:27:53 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <unistd.h>
 # include <grp.h>
 # include "libft/libft.h"
+# include <sys/acl.h>
+# include <sys/xattr.h>
 
 int		ft_ls(int flag, char *str);
 void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str);
@@ -46,6 +48,7 @@ void	ft_freedom(char **s, char **tab, size_t ct, unsigned char **type);
 void	ft_sorting(char **tab, size_t ct, int flag);
 void	readdir2(DIR *dir);
 void	jstname(char **argv, int i, int ct);
+char	ft_acl(char *pat);
 
 # define TYPE "cpc.d.b.-.l.s"
 #endif

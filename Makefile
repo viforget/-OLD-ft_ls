@@ -6,7 +6,7 @@
 #    By: viforget <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/10 12:42:08 by viforget          #+#    #+#              #
-#    Updated: 2019/05/10 13:22:26 by viforget         ###   ########.fr        #
+#    Updated: 2019/06/05 19:28:25 by viforget         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ SRC = error.c\
 	  ft_recursive.c\
 	  fullinfo.c\
 	  sort_for_ls.c\
+	  fornorm.c\
+	  acl.c\
 
 OBJ = $(SRC:.c=.o)
 

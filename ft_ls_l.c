@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/04 19:43:00 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/05 19:28:05 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 ** return a str[10] with de right of the file
 */
 
-char	*setright(int mode, char c)
+char	*setright(int mode, char c, char acl)
 {
-	char	right[11];
+	char	right[12];
 
 	if (S_ISLNK(mode) && c == 'c')
 		c = 'l';
@@ -41,7 +41,8 @@ char	*setright(int mode, char c)
 		(right[2] = '-');
 	mode % 512 >= 256 ? right[1] = 'r' :
 		(right[1] = '-');
-	right[10] = '\0';
+	right[10] = acl;
+	right[11] = '\0';
 	return (ft_strdup(right));
 }
 
@@ -87,7 +88,7 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 
 	lstat(pat, &stt);
 	ginfo = getpwuid(stt.st_uid);
-	itab[0] = setright(stt.st_mode, TYPE[type]);
+	itab[0] = setright(stt.st_mode, TYPE[type], ft_acl(pat));
 	date = ft_strsplit(ctime(&stt.st_mtime), ' ');
 	setdate(date, itab, stt.st_mtime);
 	if (itab[0][0] == 'c' || itab[0][0] == 'b')
@@ -97,7 +98,7 @@ size_t	ft_addinfo(char **itab, unsigned char type, char *pat)
 	if ((group = getgrgid(stt.st_gid)))
 		itab[3] = ft_strdup(group->gr_name);
 	else
-		itab[3] = NULL;
+		itab[3] = ft_strdup("\0");
 	if (ginfo == NULL)
 		itab[2] = ft_strdup("502");
 	else
@@ -124,7 +125,7 @@ void	ft_addinfotab(char **tab, size_t ct, unsigned char *type, char *str)
 	{
 		itab[i] = (char **)ft_memalloc(sizeof(char *) * 8);
 		tot += ft_addinfo(itab[i], type[i], ft_strjoin(str, tab[i]));
-		if (itab[i][3] == NULL)
+		if (!itab[i][3][0])
 		{
 			tab[0] = ft_strdup("");
 			ft_freeitab(itab);

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 16:11:05 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/04 17:06:11 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:16:06 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ void	readdir2(DIR *dir)
 {
 	readdir(dir);
 	readdir(dir);
+}
+
+void	ft_afffile(char **tab, int j, unsigned char *type, int flag)
+{
+	ft_addinfotab2(tab, j, type, ft_strdup("./"));
+	ft_puttab(tab, j);
+	flag % 17 == 0 ? ft_putchar('\n') : 0;
 }

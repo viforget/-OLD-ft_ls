@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:26:16 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/05 19:27:53 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:15:50 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_sorting(char **tab, size_t ct, int flag);
 void	readdir2(DIR *dir);
 void	jstname(char **argv, int i, int ct);
 char	ft_acl(char *pat);
+void	ft_afffile(char **tab, int j, unsigned char *type, int flag);
 
 # define TYPE "cpc.d.b.-.l.s"
 #endif

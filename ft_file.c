@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 10:37:52 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/04 17:18:09 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:25:33 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ void	ft_tabstrdel(char **tab)
 	free(tab);
 }
 
+int		ft_if_dir(int flag, DIR *dir)
+{
+	closedir(dir);
+	if (flag % 17 == 0)
+		return (1);
+	else
+		return (17);
+}
+
 void	ft_file(char **argv, int i, int ct, int flag)
 {
 	DIR				*dir;
@@ -94,18 +103,11 @@ void	ft_file(char **argv, int i, int ct, int flag)
 			j++;
 		}
 		else if (dir != NULL)
-		{
-			flag % 17 == 0 ? 1 : (flag *= 17);
-			closedir(dir);
-		}
+			flag *= ft_if_dir(flag, dir);
 		i++;
 	}
 	if (j != 0)
-	{
-		ft_addinfotab2(tab, j, type, ft_strdup("./"));
-		ft_puttab(tab, j);
-		flag % 17 == 0 ? ft_putchar('\n') : 0;
-	}
+		ft_afffile(tab, j, type, flag);
 	ft_tabstrdel(tab);
 	free(type);
 }

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 14:20:19 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/05 19:28:05 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/06 20:09:43 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	*setright(int mode, char c, char acl)
 {
 	char	right[12];
 
-	if (S_ISLNK(mode) && c == 'c')
-		c = 'l';
+	S_ISLNK(mode) && c == 'c' ? c = 'l' : 1;
 	right[0] = c;
 	mode % 2 == 1 ? right[9] = 'x' :
 		(right[9] = '-');

@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/21 18:39:57 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/05 18:52:40 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/06 21:24:43 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*majmin(dev_t rdev)
 	while (i >= 0)
 		str[j--] = tp[i--];
 	str[2] = ',';
+	str[7] = '\0';
 	ft_strdel(&tp);
 	return (str);
 }

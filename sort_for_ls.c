@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/05/30 18:28:32 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/10 20:13:00 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,20 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag)
 {
 	int				j;
 	struct dirent	*st;
+	struct stat b1;
+	struct stat b2;
 
 	j = 0;
 	while (tr[j + 1])
 	{
-		if ((ft_strcmp(tr[j]->d_name, tr[j + 1]->d_name) > 0 && flag % 5 != 0)
-				|| (ft_strcmp(tr[j]->d_name, tr[j + 1]->d_name) < 0
-					&& flag % 5 == 0))
+		if (flag % 11 == 0)
+		{
+			stat(tr[j]->d_name, &b1);
+			stat(tr[j + 1]->d_name, &b2);
+		}
+		if ((flag % 11 == 0 ? b1.st_mtime < b2.st_mtime :
+					ft_strcmp(tr[j]->d_name, tr[j + 1]->d_name) > 0) +
+					(flag % 5 == 0) % 2)
 		{
 			st = tr[j];
 			tr[j] = tr[j + 1];
@@ -65,9 +72,7 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag)
 			j > 0 ? j-- : (j = 0);
 		}
 		else
-		{
 			j++;
-		}
 	}
 }
 
@@ -81,8 +86,9 @@ void	ft_sort_ls_t(char **tab, size_t i, size_t ct)
 	j = i;
 	while (j - i < ct && tab[j + 1])
 	{
-		stat(tab[j], &bf1);
-		stat(tab[j + 1], &bf2);
+		lstat(tab[j], &bf1);
+		if (lstat(tab[j + 1], &bf2) == -1)
+			return ;
 		if (bf1.st_mtime < bf2.st_mtime)
 		{
 			st = tab[j];

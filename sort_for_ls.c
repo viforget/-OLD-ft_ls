@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/11 09:55:57 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/11 09:56:59 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	ft_sort_tab_dir(struct dirent **tr, int flag)
 {
 	int				j;
 	struct dirent	*st;
-	struct stat b1;
-	struct stat b2;
+	struct stat		b1;
+	struct stat		b2;
 
 	j = 0;
 	while (tr[j + 1])

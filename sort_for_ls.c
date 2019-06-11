@@ -6,7 +6,7 @@
 /*   By: viforget <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 21:50:42 by viforget          #+#    #+#             */
-/*   Updated: 2019/06/10 20:13:00 by viforget         ###   ########.fr       */
+/*   Updated: 2019/06/11 09:55:57 by viforget         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ void	ft_sort_ls_t(char **tab, size_t i, size_t ct)
 	struct stat	bf2;
 
 	j = i;
-	while (j - i < ct && tab[j + 1])
+	while (j - i <= ct && tab[j + 1])
 	{
-		lstat(tab[j], &bf1);
-		if (lstat(tab[j + 1], &bf2) == -1)
+		if ((lstat(tab[j], &bf1) == -1) || (lstat(tab[j + 1], &bf2) == -1))
 			return ;
 		if (bf1.st_mtime < bf2.st_mtime)
 		{
